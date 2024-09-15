@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @unique @default(uuid())
+  email     String   @unique @db.Text
+  name      String   @db.Text
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  members   Member[]
+  password  String
+  imageId   String?
+}
+
+model Member {
+  id             String       @id @unique @default(uuid())
+  messages       Message[]
+  joinedAt       DateTime     @default(now())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  conversationId String
+  conversations  Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           Role         @default(MEMBER)
+}
+
+model Conversation {
+  id         String    @id @unique @default(uuid())
+  isGroup    Boolean?  @default(false)
+  groupTitle String?   @db.Text
+  members    Member[]
+  messages   Message[]
+  type       Type?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum Type {
+  DIRECT_MESSAGE
+  GROUP
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model Message {
+  id             String       @id @unique @default(uuid())
+  body           String?      @db.Text
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         Member       @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  fileId         String?
+  fileUrl        String?
+}
