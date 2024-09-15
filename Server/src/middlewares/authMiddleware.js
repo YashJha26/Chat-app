@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 const authMiddleware = async (req,res,next) =>{
     const token = req?.cookies?.token??null;
+    console.log(req?.cookies);
     let verifiedToken;
     try {
         if(token){
