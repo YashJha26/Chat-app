@@ -13,7 +13,7 @@ import imageKitAuthController from './controllers/imageKitAuthController.js';
 import ioMiddleware from './middlewares/ioMiddleware.js';
 
 dotenv.config();
-const allowedOrigins = ['http://localhost:5173','https://chatappfrontend-cvy9.onrender.com/'];
+const allowedOrigins = ['http://localhost:5173','https://chatappfrontend-cvy9.onrender.com'];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true,
