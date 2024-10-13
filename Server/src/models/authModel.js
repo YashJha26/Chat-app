@@ -37,7 +37,12 @@ export const signup = async (req ,res) =>{
             });
 
 
-            res.cookie("token", await generateToken(newUser));
+            res.cookie('clientToken', token, {
+              httpOnly: false,   // Allows access on the client-side
+              secure: true,      // Ensures the cookie is sent over HTTPS
+              sameSite: 'None',  // For cross-origin requests
+            });
+
             return res.json({
                 message: "Signed up successfully",
                 user: {
@@ -77,7 +82,12 @@ export const login = async (req,res) => {
           return res.json({ message: "Invalid password" });
         }
         const token=await generateToken(existingUser);
-        res.cookie("token", token);
+        res.cookie('clientToken', token, {
+          httpOnly: false,   // Allows access on the client-side
+          secure: true,      // Ensures the cookie is sent over HTTPS
+          sameSite: 'None',  // For cross-origin requests
+        });
+
         return res.json({
           message: "Logged in successfully",
           token:token,
