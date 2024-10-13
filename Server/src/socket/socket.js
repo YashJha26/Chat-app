@@ -7,6 +7,7 @@ const server = createServer(app);
 const allowedOrigins = [
     'http://localhost:5173',
     'https://chatappfrontend-cvy9.onrender.com',
+    'https://670bd090e9aca37902b4aad0--chatappfrontend1122.netlify.app',
     process.env.CLIENT_AUTH_URL || ''
 ].filter(Boolean); 
 
