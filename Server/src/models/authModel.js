@@ -42,7 +42,6 @@ export const signup = async (req ,res) =>{
               secure: true,      // Ensures the cookie is sent over HTTPS
               sameSite: 'None',  // For cross-origin requests
                 path: '/',
-                domain: '.onrender.com', // Makes the cookie accessible to all subdomains
             });
 
             return res.json({
@@ -89,7 +88,6 @@ export const login = async (req,res) => {
           secure: true,      // Ensures the cookie is sent over HTTPS
           sameSite: 'None',  // For cross-origin requests
               path: '/',
-            domain: '.onrender.com', // Makes the cookie accessible to all subdomains
         });
 
         return res.json({
