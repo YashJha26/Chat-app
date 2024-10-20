@@ -37,10 +37,11 @@ export const signup = async (req ,res) =>{
             });
 
 
-            res.cookie('clientToken', token, {
+            res.cookie('token', token, {
               httpOnly: false,   // Allows access on the client-side
               secure: true,      // Ensures the cookie is sent over HTTPS
               sameSite: 'None',  // For cross-origin requests
+                path: '/',
             });
 
             return res.json({
@@ -82,10 +83,11 @@ export const login = async (req,res) => {
           return res.json({ message: "Invalid password" });
         }
         const token=await generateToken(existingUser);
-        res.cookie('clientToken', token, {
+        res.cookie('token', token, {
           httpOnly: false,   // Allows access on the client-side
           secure: true,      // Ensures the cookie is sent over HTTPS
           sameSite: 'None',  // For cross-origin requests
+              path: '/',
         });
 
         return res.json({
